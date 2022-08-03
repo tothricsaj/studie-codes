@@ -1,8 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 
-//TODO: add Typescript
-
 function App() {
   return (
     <div className="App">
