@@ -1,12 +1,12 @@
 const Sequelize = require('sequelize').Sequelize
 
 const sequelize = new Sequelize(
-  'book-manager',
-  'admin',
-  'Admin1234$',
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASS,
   {
-    dialect: 'mysql',
-    host: 'localhost'
+    dialect: process.env.DB_DIALECT,
+    host: process.env.DB_HOST
   }
 )
 
