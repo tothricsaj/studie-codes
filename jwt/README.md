@@ -5,3 +5,5 @@
 * loginded users see two pages (public, user)
 * admin users see three pages (public, user, admin)
 * users are saved in database
+
+* cover the app with test (both back-end, front-end)
