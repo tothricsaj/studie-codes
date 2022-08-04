@@ -1,5 +1,5 @@
 {
-  "name": "jwt-studie",
+  "name": "basic-be-environment",
   "version": "1.0.0",
   "description": "back-end for studie codes",
   "main": "./src/index.js",
