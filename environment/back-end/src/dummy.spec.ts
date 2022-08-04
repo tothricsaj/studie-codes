@@ -1,5 +1,8 @@
 // this is because of testing jest
+
+import { sum } from "./util/dummy";
+
 test("Dummy unit test", () => {
-  const actual = null; // not implemented yet
-  expect(actual).toBe(1);
+  const actual = sum(3, 1); // not implemented yet
+  expect(actual).toBe(4);
 });
