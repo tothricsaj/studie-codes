@@ -1,0 +1,28 @@
+{
+  "name": "basic-be-environment",
+  "version": "1.0.0",
+  "description": "back-end for studie codes",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "npx jest",
+    "start": "nodemon ./src/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^18.6.3",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.21.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.6",
+    "jest": "^28.1.3",
+    "nodemon": "^2.0.19",
+    "ts-jest": "^28.0.7",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4"
+  }
+}
