@@ -10,3 +10,6 @@ This is the environment and this is developed on a separeted branch -> environme
 ### Back-end
 * ExpressJS
 * TypeScirpt
+* MySql
+* Sequelize
+* Jest
