@@ -8,5 +8,26 @@
 </head>
 <body>
 	<h2>HTTP study</h2>
+	<h3>Kutya</h3>
+
+	<button class="push-me">Push me</button>
+
+	<script>
+		const pushMeBtn = document.querySelector('.push-me');
+		async function sendRequest() {
+			const response = await fetch('http://localhost:8080/api', {
+				method: 'POST',
+				cache: 'no-cache',
+				body: 'Subi dubi....!!!!!'
+			});
+
+			return response;
+		}
+
+		pushMeBtn.addEventListener('click', (e) => {
+			sendRequest()
+				.then(data => console.log(data));
+		});
+	</script>
 </body>
 </html>
