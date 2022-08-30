@@ -20,7 +20,7 @@ http.createServer(function (req, res) {
 		return;
 	}
 
-  fs.readFile(__dirname + '/index.html', function (err,data) {
+  fs.readFile(__dirname + req.url, function (err,data) {
 
     if (err) {
       res.writeHead(404);
