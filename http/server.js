@@ -10,19 +10,11 @@ http.createServer(function (req, res) {
 	// console.log('req.method -> ', req.method);
 	// console.log('req.body -> ', req.body);
 
-	if(req.url === '/api') {
-		console.log('req.url -> ', req.url);
-
-		res.content
-		res.writeHead(200);
-		res.end('Nahát nahát.....');
-
-		return;
-	}
+	// res.setHeader('Cache-Control', 'max-age=31536000');
+	// res.write('hello world')
+	// res.end();
 
   fs.readFile(__dirname + req.url, function (err,data) {
-
-		const headerObject = {};
 
 		const requestContentType = req.headers['accept'].split(',')[0];
 
@@ -33,10 +25,7 @@ http.createServer(function (req, res) {
     }
 
 		if(requestContentType === 'text/css') {
-			res.writeHead(200, {
-				'Content-Type': 'text/css',
-				'Cache-Controll': 'max-age=604800'
-			});
+			res.setHeader('Cache-Control', 'max-age=604800, private')
 		}
 
 		if(requestContentType === 'text/html') {
