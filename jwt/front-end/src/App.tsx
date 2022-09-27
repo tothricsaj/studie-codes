@@ -20,28 +20,33 @@ function App() {
     });
   }
 
-  useEffect(() => {
-    fetch('http://localhost:5000/content')
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        console.log('data', data);
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    console.log(inputValues);
+  }
+
+  // useEffect(() => {
+  //   fetch('http://localhost:5000/content')
+  //     .then(res => {
+  //       return res.json();
+  //     })
+  //     .then(data => {
+  //       console.log('data', data);
         
-        setContent(data.content);
-      })
-      .catch(e => console.log(e)
-      )
-      .finally(() => {
-        setFetchError('Content not Fetched')
-      })
-  });
+  //       setContent(data.content);
+  //     })
+  //     .catch(e => console.log(e)
+  //     )
+  //     .finally(() => {
+  //       setFetchError('Content not Fetched')
+  //     })
+  // });
 
   return (
     <div className="App">
       <div className="App-header">
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="userName"
@@ -60,7 +65,7 @@ function App() {
         {
           isAuth
             ? <p>{content}</p>
-            : <p>Not authenticated</p>
+            : <p>Please login!</p>
         }
 
       </div>
