@@ -36,9 +36,14 @@ app.post('/login', (_req, _res) => {
   const userName = _req.body.userName;
   const password = _req.body.password;
 
+  console.log('req.body -> ', _req.body);
+
   const foundUser = users.filter(user => user.userName === userName);
 
-  _res.json(foundUser);
+  console.log('foundUser -> ', foundUser);
+  
+
+  _res.json(foundUser[0]);
 });
 
 

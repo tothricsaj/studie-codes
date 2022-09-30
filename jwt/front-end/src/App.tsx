@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  const [content, setContent] = useState({foo: ''});
+  const [content, setContent] = useState({userName: '', password: ''});
   const [fetchError, setFetchError] = useState('');
   const [isAuth, setIsAuth] = useState(false);
   const [inputValues, setInputValues] = useState({
@@ -30,13 +30,15 @@ function App() {
       body: JSON.stringify(inputValues)
     }) 
     .then(res => {
-      // res.json()
-      console.log('res -> ', res);
-      return {
-        foo: 'bar'
-      };
+      return res.json()
+      // console.log('res -> ', res);
+      // return {
+      //   foo: 'bar'
+      // };
     })
-    .then(data => {
+    .then((data: any) => {
+      console.log('data -> ', data);
+      
       setContent(data);
       setIsAuth(true);
     })
@@ -83,7 +85,7 @@ function App() {
         </form>
         {
           isAuth
-            ? <p>{content.foo}</p>
+            ? <p>{content.userName}</p>
             : <p>Please login!</p>
         }
 
