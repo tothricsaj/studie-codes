@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  const [content, setContent] = useState(null);
+  const [content, setContent] = useState({foo: ''});
   const [fetchError, setFetchError] = useState('');
   const [isAuth, setIsAuth] = useState(false);
   const [inputValues, setInputValues] = useState({
@@ -22,7 +22,26 @@ function App() {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log(inputValues);
+    fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(inputValues)
+    }) 
+    .then(res => {
+      // res.json()
+      console.log('res -> ', res);
+      return {
+        foo: 'bar'
+      };
+    })
+    .then(data => {
+      setContent(data);
+      setIsAuth(true);
+    })
+    .catch(err => console.log(err)
+    )
   }
 
   // useEffect(() => {
@@ -64,7 +83,7 @@ function App() {
         </form>
         {
           isAuth
-            ? <p>{content}</p>
+            ? <p>{content.foo}</p>
             : <p>Please login!</p>
         }
 
