@@ -5,12 +5,15 @@ import express from 'express';
  
 import bodyParser from 'body-parser';
 
+import jwt from 'jsonwebtoken';
+
 const app: express.Application = express();
  
 const port: number = 5000;
 
 const users = [
   {
+    id: 1,
     userName: 'Jon Doe',
     password: '1234'
   }
@@ -36,14 +39,30 @@ app.post('/login', (_req, _res) => {
   const userName = _req.body.userName;
   const password = _req.body.password;
 
-  console.log('req.body -> ', _req.body);
+  const foundUser = users.filter(user => user.userName === userName)[0];
 
-  const foundUser = users.filter(user => user.userName === userName);
+  if(!foundUser) {
+    const error = new Error('User not found!');
+    throw error;
+  }
 
-  console.log('foundUser -> ', foundUser);
-  
+  if(password !== foundUser.password) {
+    throw new Error('Wrong password!');
+  }
 
-  _res.json(foundUser[0]);
+  const token = jwt.sign(
+    {
+      userId: foundUser.id,
+      userName: foundUser.userName
+    },
+    'somesupersecretsecret',
+    {expiresIn: '1h'}
+  );
+
+  _res.status(200).json({
+    token: token,
+    userName: foundUser.userName
+  });
 });
 
 

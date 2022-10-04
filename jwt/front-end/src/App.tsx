@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { JsxElement } from 'typescript';
 import './App.css';
 
 function App() {
   const [content, setContent] = useState({userName: '', password: ''});
-  const [fetchError, setFetchError] = useState('');
   const [isAuth, setIsAuth] = useState(false);
+  const [token, setToken] = useState();
+  const [userName, setUserName] = useState();
   const [inputValues, setInputValues] = useState({
     userName: '',
     password: ''
@@ -37,10 +39,14 @@ function App() {
       // };
     })
     .then((data: any) => {
-      console.log('data -> ', data);
-      
-      setContent(data);
       setIsAuth(true);
+      setToken(data.token);
+      setUserName(data.userName);
+
+      console.log('data.userName ->  ', data.userName);
+      
+
+      localStorage.setItem('token', data.token);
     })
     .catch(err => console.log(err)
     )
@@ -67,26 +73,30 @@ function App() {
     <div className="App">
       <div className="App-header">
 
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="userName"
-            value={inputValues.userName}
-            onChange={handleInputChanges}
-          />
-          <input
-            type="password"
-            name="password"
-            value={inputValues.password}
-            onChange={handleInputChanges}
-          />
-
-          <input type="submit" value="Login" />
-        </form>
         {
           isAuth
-            ? <p>{content.userName}</p>
-            : <p>Please login!</p>
+          ? <>
+              <h2>{userName}</h2>
+              <form>
+                <input type="submit" value="Signout" />
+              </form>
+            </>
+          :<form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="userName"
+              value={inputValues.userName}
+              onChange={handleInputChanges}
+            />
+            <input
+              type="password"
+              name="password"
+              value={inputValues.password}
+              onChange={handleInputChanges}
+            />
+
+            <input type="submit" value="Login" />
+          </form>
         }
 
       </div>
