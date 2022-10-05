@@ -22,7 +22,7 @@ function App() {
     });
   }
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const loginHandle = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     try {
@@ -42,7 +42,7 @@ function App() {
         setInputValues({
           userName: '',
           password: ''
-        })
+        });
       }
 
       if(res.status === 200) {
@@ -58,6 +58,19 @@ function App() {
     }
   }
 
+  const logoutHandle = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    setIsAuth(false);
+    setInputValues({
+      userName: '',
+      password: ''
+    }); 
+    setMessage(null);
+
+    localStorage.removeItem('token');
+  }
+
   return (
     <div className="App">
       <div className="App-header">
@@ -71,11 +84,11 @@ function App() {
           isAuth
           ? <>
               <h2>{userName}</h2>
-              <form>
+              <form onSubmit={logoutHandle}>
                 <input type="submit" value="Signout" />
               </form>
             </>
-          :<form onSubmit={handleSubmit}>
+          :<form onSubmit={loginHandle}>
             <input
               type="text"
               name="userName"
