@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+import Content from './components/Content/Content';
+
 function App() {
   const [content, setContent] = useState({userName: '', password: ''});
   const [isAuth, setIsAuth] = useState(false);
@@ -105,8 +107,8 @@ function App() {
             <input type="submit" value="Login" />
           </form>
         }
-
       </div>
+      <Content />
     </div>
   );
 }
