@@ -38,6 +38,11 @@ function App() {
 
       if(res.status === 401) {
         setMessage(data.message);
+
+        setInputValues({
+          userName: '',
+          password: ''
+        })
       }
 
       if(res.status === 200) {
