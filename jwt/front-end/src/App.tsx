@@ -22,35 +22,64 @@ function App() {
     });
   }
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    fetch('http://localhost:5000/login', {
+
+    const res = await fetch('http://localhost:5000/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(inputValues)
-    }) 
-    .then(res => {
-      if(res.status === 401) {
-        setMessage('Validation error!');
-      }
+    });
 
-      return res.json()
-    })
-    .then((data: any) => {
+    const data = await res.json();
+
+    if(res.status === 401) {
+      setMessage(data.message);
+    }
+
+    if(res.status === 200) {
       setIsAuth(true);
       setToken(data.token);
       setUserName(data.userName);
       setMessage(data.message);
 
-      console.log('data.userName ->  ', data.userName);
-      
-
       localStorage.setItem('token', data.token);
-    })
-    .catch(err => console.log(err)
-    )
+    }
+    
+    
+    // .then(res => {
+    //   console.log('res.json -> ', res.json);
+      
+    //   return res.json();
+    // })
+    // .then((data: any) => {
+
+    //   const {fetchedData, statusCode} = data;
+      
+    //   console.log('data ->  ', data);
+    //   if(statusCode === 401) {
+    //     console.log('inside');
+        
+    //     setMessage(fetchedData.message);
+
+        
+    //   }
+
+    //   if(statusCode === 200) {
+    //     setIsAuth(true);
+    //     setToken(fetchedData.token);
+    //     setUserName(fetchedData.userName);
+
+    //     localStorage.setItem('token', data.token);
+    //   }
+    // })
+    // .catch(err => console.log(err)
+    // )
+    // .finally(() => {
+    //     console.log('message -> ', message);
+    // })
   }
 
   // useEffect(() => {
