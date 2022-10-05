@@ -6,6 +6,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import jwt from 'jsonwebtoken';
+import { json } from 'stream/consumers';
 
 const app: express.Application = express();
  
@@ -41,13 +42,21 @@ app.post('/login', (_req, _res) => {
 
   const foundUser = users.filter(user => user.userName === userName)[0];
 
+  const responseObj = {
+    token: '',
+    userName: '',
+    message: ''
+  };
+
   if(!foundUser) {
     const error = new Error('User not found!');
     throw error;
   }
 
   if(password !== foundUser.password) {
-    throw new Error('Wrong password!');
+    // throw new Error('Wrong password!');
+    responseObj.message = "Wrong username or password!"
+    _res.status(401).json(responseObj);
   }
 
   const token = jwt.sign(
@@ -58,11 +67,12 @@ app.post('/login', (_req, _res) => {
     'somesupersecretsecret',
     {expiresIn: '1h'}
   );
+  
+  responseObj.token = token;
+  responseObj.userName = foundUser.userName;
+  responseObj.message = "Welcome";
 
-  _res.status(200).json({
-    token: token,
-    userName: foundUser.userName
-  });
+  _res.status(200).json(responseObj);
 });
 
 
