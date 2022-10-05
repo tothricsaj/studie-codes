@@ -73,6 +73,11 @@ function App() {
   return (
     <div className="App">
       <div className="App-header">
+        {
+          message
+          ? <p className="message">{message}</p>
+          : null
+        }
 
         {
           isAuth
