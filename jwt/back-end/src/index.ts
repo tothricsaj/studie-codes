@@ -6,7 +6,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import jwt from 'jsonwebtoken';
-import { json } from 'stream/consumers';
+import isAuth from './middleware/isAuth';
 
 const app: express.Application = express();
  
@@ -76,9 +76,9 @@ app.post('/login', (_req, _res) => {
 });
 
 
-app.get('/content', (_req, _res) => {
+app.get('/content', isAuth, (_req, _res) => {
   _res.json({
-    content: 'you can read the content!'
+    content: 'What a wonderful content here....'
   });
 });
  
