@@ -12,8 +12,6 @@ const fetchContent = async (token: string, setContent: (content: string)=>void) 
     });
     const fetchedContent = await res.json();
 
-    console.log('fetchedContent -> ', fetchedContent);
-
     setContent(fetchedContent.content);
   } catch(e) {
     console.log(e);
@@ -30,15 +28,6 @@ function App() {
     userName: '',
     password: ''
   });
-
-
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-
-	// 	}
-
-	// 	fetchData();
-	// }, [content, isAuth]);
 
   useEffect(() => {
     setToken(localStorage.getItem('token'));
