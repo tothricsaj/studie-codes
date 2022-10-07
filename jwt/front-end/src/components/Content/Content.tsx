@@ -11,7 +11,6 @@ const Content = ({token, content}: ContentProps): JSX.Element => {
 	return (
 		<div>
 			{content}
-			<p>token - {token}</p>
 		</div>
 	);
 }

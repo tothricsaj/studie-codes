@@ -3,6 +3,23 @@ import './App.css';
 
 import Content from './components/Content/Content';
 
+const fetchContent = async (token: string, setContent: (content: string)=>void) => {
+  try {
+    const res = await fetch('http://localhost:5000/content', {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    });
+    const fetchedContent = await res.json();
+
+    console.log('fetchedContent -> ', fetchedContent);
+
+    setContent(fetchedContent.content);
+  } catch(e) {
+    console.log(e);
+  }
+}
+
 function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [token, setToken] = useState<string | null>(null);
@@ -15,24 +32,13 @@ function App() {
   });
 
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const res = await fetch('http://localhost:5000/content', {
-					headers: {
-						Authorization: 'Bearer ' + token
-					}
-				});
-				const fetchedContent = await res.json();
+	// useEffect(() => {
+	// 	const fetchData = async () => {
 
-				setContent(fetchedContent.content);
-			} catch(e) {
-				console.log(e);
-			}
-		}
+	// 	}
 
-		fetchData();
-	}, [content]);
+	// 	fetchData();
+	// }, [content, isAuth]);
 
   useEffect(() => {
     setToken(localStorage.getItem('token'));
@@ -77,6 +83,8 @@ function App() {
         setUserName(data.userName);
         setMessage(data.message);
 
+        fetchContent(data.token as string, setContent)
+
         localStorage.setItem('token', data.token);
       }
     } catch(e) {
@@ -93,6 +101,8 @@ function App() {
       password: ''
     }); 
     setMessage(null);
+    setToken(null);
+    setContent('Pleas login to see content!')
 
     localStorage.removeItem('token');
   }
