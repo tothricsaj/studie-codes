@@ -4,15 +4,39 @@ import './App.css';
 import Content from './components/Content/Content';
 
 function App() {
-  const [content, setContent] = useState({userName: '', password: ''});
   const [isAuth, setIsAuth] = useState(false);
-  const [token, setToken] = useState();
+  const [token, setToken] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [userName, setUserName] = useState();
+	const [content, setContent] = useState<string>('Pleas login to see content!');
   const [inputValues, setInputValues] = useState({
     userName: '',
     password: ''
   });
+
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const res = await fetch('http://localhost:5000/content', {
+					headers: {
+						Authorization: 'Bearer ' + token
+					}
+				});
+				const fetchedContent = await res.json();
+
+				setContent(fetchedContent.content);
+			} catch(e) {
+				console.log(e);
+			}
+		}
+
+		fetchData();
+	}, [content]);
+
+  useEffect(() => {
+    setToken(localStorage.getItem('token'));
+  }, [token]);
 
   const handleInputChanges = (event: React.FormEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value;
@@ -108,7 +132,7 @@ function App() {
           </form>
         }
       </div>
-      <Content />
+      <Content token={token} content={content} />
     </div>
   );
 }
